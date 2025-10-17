@@ -4,7 +4,9 @@ An asynchronous, text-based multiplayer social deduction game for Microsoft Team
 
 ## Overview
 
-Office Intrigue is a cloud-native, multi-tenant game that supports 4-100 players across hours or weeks of gameplay. Players complete collaborative tasks, identify impostors/double-agents, and navigate timezone-aware quiet hours in themed environments like Office, Spaceship, Pirate Ship, and Deserted Island.
+Office Intrigue is a social deduction game inspired by Among Us, built for Microsoft Teams and playable as a standalone web app. Support 4-100 players in asynchronous gameplay across themed environments with collaborative tasks, impostor mechanics, and voting.
+
+**Current Status**: ✅ **Web version fully playable!** Teams integration coming soon.
 
 ## Features
 
@@ -31,6 +33,25 @@ Office Intrigue is a cloud-native, multi-tenant game that supports 4-100 players
 ```bash path=null start=null
 npm install
 ```
+
+### Play the Game (Web Version)
+
+1. **Start the server**:
+   ```bash path=null start=null
+   npm run dev
+   ```
+
+2. **Open your browser** to `http://localhost:3978`
+
+3. **Create or join a game**:
+   - Click "Create Game" and select an environment (Office, Spaceship, or Pirate Ship)
+   - Share the Game ID with friends
+   - Friends can join using the Game ID
+
+4. **Start playing**:
+   - Once 2+ players join, click "Start Game"
+   - Roles are assigned (Crew vs. Impostor)
+   - Complete tasks, vote out suspects, and find the impostors!
 
 ### Development
 
