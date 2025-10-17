@@ -37,6 +37,7 @@ npm install
 ### Play the Game (Web Version)
 
 1. **Start the server**:
+
    ```bash path=null start=null
    npm run dev
    ```
@@ -78,6 +79,7 @@ npm run format
 ### Configuration
 
 Copy `.env.example` to `.env` and configure:
+
 - Microsoft Bot Framework credentials
 - Azure Cosmos DB connection
 - Environment settings
@@ -86,6 +88,7 @@ See `docs/CONFIGURATION.md` for details.
 
 ## Documentation
 
+- [WARP.md](WARP.md) - Guidance for Warp AI development
 - [Prerequisites](docs/PREREQUISITES.md) - Required software and tools
 - [Architecture](docs/ARCHITECTURE.md) - System design and architecture
 - [API Documentation](docs/API.md) - REST API endpoints
