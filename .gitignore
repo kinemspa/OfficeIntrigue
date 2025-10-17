@@ -1,0 +1,13 @@
+node_modules
+dist
+.env
+.env.*
+coverage
+.vscode
+.DS_Store
+npm-debug.log*
+.nyc_output
+appPackage/build
+*.log
+.cache
+temp/

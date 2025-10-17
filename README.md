@@ -26,7 +26,50 @@ Office Intrigue is a cloud-native, multi-tenant game that supports 4-100 players
 
 ## Quick Start
 
-Documentation coming soon. See `docs/` directory for detailed guides.
+### Installation
+
+```bash path=null start=null
+npm install
+```
+
+### Development
+
+```bash path=null start=null
+# Run in development mode with hot reload
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+
+# Run tests
+npm test
+
+# Lint code
+npm run lint
+
+# Format code
+npm run format
+```
+
+### Configuration
+
+Copy `.env.example` to `.env` and configure:
+- Microsoft Bot Framework credentials
+- Azure Cosmos DB connection
+- Environment settings
+
+See `docs/CONFIGURATION.md` for details.
+
+## Documentation
+
+- [Prerequisites](docs/PREREQUISITES.md) - Required software and tools
+- [Architecture](docs/ARCHITECTURE.md) - System design and architecture
+- [API Documentation](docs/API.md) - REST API endpoints
+- [OpenSpec](docs/OPENSPEC.md) - Comprehensive specification
+- [Configuration](docs/CONFIGURATION.md) - Environment and deployment setup
 
 ## License
 
