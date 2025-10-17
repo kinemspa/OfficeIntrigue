@@ -62,9 +62,8 @@ export class GameEngine {
     };
 
     await memoryStorage.create('games', {
-      id: gameId,
-      partitionKey: game.tenantId,
       ...game,
+      partitionKey: game.tenantId,
     });
 
     return { gameId };
@@ -207,7 +206,7 @@ export class GameEngine {
 
   async listGames(): Promise<GameState[]> {
     const games = await memoryStorage.query('games');
-    return games as GameState[];
+    return games as unknown as GameState[];
   }
 }
 
