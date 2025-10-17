@@ -1,0 +1,48 @@
+{
+  "theme": "spaceship",
+  "tasks": [
+    {
+      "id": "calibrate-nav",
+      "type": "puzzle",
+      "title": "Calibrate Navigation",
+      "description": "Align the stellar coordinates to avoid asteroids.",
+      "slotsAvailable": 4,
+      "requiredPlayers": 3,
+      "duration": "1h",
+      "rewards": {
+        "points": 12
+      }
+    },
+    {
+      "id": "fix-oxygen",
+      "type": "coordination",
+      "title": "Repair Oxygen System",
+      "description": "Work together to restore life support before time runs out!",
+      "slotsAvailable": 2,
+      "requiredPlayers": 2,
+      "duration": "45m",
+      "rewards": {
+        "points": 15
+      }
+    },
+    {
+      "id": "scan-anomaly",
+      "type": "trivia",
+      "title": "Scan Anomaly",
+      "description": "Identify the unknown signal. What could it be?",
+      "slotsAvailable": 3,
+      "requiredPlayers": 1,
+      "duration": "30m",
+      "rewards": {
+        "points": 7
+      }
+    }
+  ],
+  "eliminationFlavors": [
+    "vented into the merger void",
+    "phased out by procurement",
+    "airlocked by compliance",
+    "lost to the vacuum of bureaucracy",
+    "ejected through the escape pod of downsizing"
+  ]
+}
