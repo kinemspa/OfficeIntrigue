@@ -34,7 +34,7 @@ export interface Task {
 }
 
 export interface Environment {
-  theme: 'office' | 'spaceship' | 'pirate-ship' | 'deserted-island';
+  theme: 'spaceship' | 'pirate-ship' | 'deserted-island';
   tasks: Task[];
   eliminationFlavors: string[];
   settings?: Record<string, unknown>;
@@ -76,7 +76,7 @@ export interface TenantContext {
 
 export interface CreateGameRequest {
   tenantId: string;
-  environment: 'office' | 'spaceship' | 'pirate-ship' | 'deserted-island';
+  environment: 'spaceship' | 'pirate-ship' | 'deserted-island';
   maxPlayers?: number;
   impostorCount?: number;
 }

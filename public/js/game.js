@@ -1,7 +1,7 @@
 // Game state
 let currentGameId = null;
 let currentPlayerId = null;
-let selectedEnvironment = 'office';
+let selectedEnvironment = 'spaceship';
 let refreshInterval = null;
 
 // Utility functions

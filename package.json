@@ -1,5 +1,5 @@
 {
-  "name": "officeintrigue",
+  "name": "hidden-agenda",
   "version": "0.1.0",
   "description": "An asynchronous, text-based multiplayer social deduction game for Microsoft Teams.",
   "main": "dist/index.js",

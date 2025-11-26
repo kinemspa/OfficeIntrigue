@@ -2,17 +2,17 @@
 
 ## Overview
 
-Office Intrigue is an asynchronous, text-based multiplayer social deduction game. This document serves as the comprehensive guide to the game's mechanics, technical design, and player experience.
+**Intrigue Engine** (working title) is an asynchronous, text-based multiplayer social deduction game. This document serves as the comprehensive guide to the game's mechanics, technical design, and player experience.
 
 ## 1. Core Gameplay Loop
 
-The game revolves around two opposing teams: **The Crew** (Productivity) and **The Impostors** (Sabotage).
+The game revolves around two opposing teams: **The Crew** (Survival) and **The Impostors** (Sabotage).
 
-### 1.1 The Hook: "Corporate Espionage"
-The core tension is **Productivity vs. Sabotage**.
-- **Crew Goal**: Keep the company afloat by completing mundane tasks to fill the "Integrity Meter" (Stock Value).
-- **Impostor Goal**: Tank the company's value or eliminate the crew without being caught.
-- **Engagement**: Asynchronous play allows suspicion to build over hours or days. You might log in to find the "Server Crashed" or that your "TPS Report" was deleted.
+### 1.1 The Hook: "Survival & Sabotage"
+The core tension is **Cooperation vs. Betrayal**.
+- **Crew Goal**: Keep the environment stable by completing tasks to fill the "Integrity Meter".
+- **Impostor Goal**: Destabilize the environment or eliminate the crew without being caught.
+- **Engagement**: Asynchronous play allows suspicion to build over hours or days. You might log in to find the "Life Support Failed" or that your "Navigation Data" was corrupted.
 
 ### 1.2 Win Conditions
 
@@ -20,10 +20,10 @@ The game ends immediately when one of the following conditions is met:
 
 | Condition | Winner | Description |
 | :--- | :--- | :--- |
-| **Productivity Goals Met** | Crew | Integrity Meter reaches **100%**. |
+| **System Stabilized** | Crew | Integrity Meter reaches **100%**. |
 | **Clean House** | Crew | All Impostors are eliminated (voted out). |
-| **Hostile Takeover** | Impostor | Integrity Meter reaches **0%**. |
-| **Boardroom Coup** | Impostor | Impostors outnumber or equal the Crew. |
+| **Critical Failure** | Impostor | Integrity Meter reaches **0%**. |
+| **Mutiny Success** | Impostor | Impostors outnumber or equal the Crew. |
 
 ---
 
@@ -34,19 +34,19 @@ The game engine dynamically re-skins the entire interface based on the selected 
 ### 2.1 Terminology Map
 When a client loads, it fetches the `TerminologyMap` for the active game to render the UI.
 
-| Concept | Office (Default) | Pirate Ship | Sci-Fi |
+| Concept | Spaceship (Default) | Pirate Ship | Deserted Island |
 | :--- | :--- | :--- | :--- |
-| **Integrity** | Stock Value | Ship Morale | Hull Integrity |
-| **Crew** | Employees | Sailors | Crewmates |
-| **Impostor** | Corporate Spy | Mutineer | Alien Parasite |
-| **Task** | Deliverable | Duty | Repair |
-| **Vote** | Fire | Walk the Plank | Eject |
-| **Eliminated** | Downsized | Keelhauled | KIA |
+| **Integrity** | Hull Integrity | Ship Morale | Camp Hope |
+| **Crew** | Crewmates | Sailors | Survivors |
+| **Impostor** | Alien Parasite | Mutineer | Traitor |
+| **Task** | Repair | Duty | Forage |
+| **Vote** | Eject | Walk the Plank | Banish |
+| **Eliminated** | KIA | Keelhauled | Lost |
 
 ### 2.2 Player Perspectives
 
-#### The "Office" Player (The Intern)
-> "I just logged in to check the **Stock Value**. It's down to 45% because someone keeps deleting the **TPS Reports**. I suspect 'Dave from Accounting' is actually a **Corporate Spy**. I'm going to **File a Complaint** (Vote) against him before we all get **Downsized**."
+#### The "Spaceship" Player (The Engineer)
+> "I just logged in to check the **Hull Integrity**. It's down to 45% because someone keeps sabotaging the **Shield Generator**. I suspect 'Unit 734' is actually an **Alien Parasite**. I'm going to **Vote to Eject** them before we all get **KIA**."
 
 #### The "Pirate" Player (The Swabbie)
 > "The **Ship Morale** is sinking fast! The **Main Sail** keeps getting unfurled. I think 'One-Eyed Jack' is a **Mutineer**. If we don't **Make him Walk the Plank** soon, the Captain will have us all **Keelhauled**."
@@ -63,9 +63,9 @@ Random events break the monotony of task completion and force players to react t
 - **Trigger**: Rolls a die against the environment's event table.
 
 **Example Scenarios**:
-- **"Server Crash" (Office)**: 20% of "Completed" tasks revert to "In Progress".
-- **"Mandatory Meeting" (Office)**: Locks all tasks and forces players into a 60-second voting window.
-- **"Power Outage" (Sci-Fi)**: Hides the Integrity Meter for 5 minutes.
+- **"Solar Flare" (Spaceship)**: 20% of "Completed" tasks revert to "In Progress".
+- **"Becalmed" (Pirate)**: Locks all tasks and forces players into a 60-second voting window.
+- **"Storm Surge" (Island)**: Hides the Integrity Meter for 5 minutes.
 
 ### 3.2 Progression & XP
 A persistent layer that rewards loyalty and skill, regardless of the specific game outcome.
@@ -78,13 +78,13 @@ A persistent layer that rewards loyalty and skill, regardless of the specific ga
 - **Task Completed**: +10 XP
 - **Correct Vote**: +25 XP
 
-**The Career Ladder (Office Theme)**:
-1.  **Intern** (Level 1)
-2.  **Probationary Hire** (Level 5)
-3.  **Junior Associate** (Level 10)
-4.  **Middle Manager** (Level 20)
-5.  **Regional VP** (Level 35)
-6.  **CEO** (Level 50)
+**The Rank Ladder (Spaceship Theme)**:
+1.  **Cadet** (Level 1)
+2.  **Ensign** (Level 5)
+3.  **Lieutenant** (Level 10)
+4.  **Commander** (Level 20)
+5.  **Captain** (Level 35)
+6.  **Admiral** (Level 50)
 
 ---
 

@@ -1,7 +1,7 @@
-# Office Intrigue - Copilot Instructions
+# Hidden Agenda - Copilot Instructions
 
 ## Project Overview
-Office Intrigue is an asynchronous, text-based multiplayer social deduction game designed for Microsoft Teams and web browsers. It aims to bring the engagement of popular social deduction games into a corporate environment through themed "productivity" gameplay that fits into the workday.
+Hidden Agenda is an asynchronous, text-based multiplayer social deduction game designed for Microsoft Teams and web browsers. It aims to bring the engagement of popular social deduction games into a corporate environment through themed "productivity" gameplay that fits into the workday.
 
 ## Tech Stack
 - **Runtime**: Node.js (LTS), TypeScript

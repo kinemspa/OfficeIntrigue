@@ -1,17 +1,17 @@
-# Office Intrigue
+# Hidden Agenda
 
 An asynchronous, text-based multiplayer social deduction game for Microsoft Teams.
 
 ## Overview
 
-Office Intrigue is a social deduction game built for Microsoft Teams and playable as a standalone web app. Support 4-100 players in asynchronous gameplay across themed environments with collaborative tasks, impostor mechanics, and voting.
+**Hidden Agenda** is a social deduction game built for Microsoft Teams and playable as a standalone web app. Support 4-100 players in asynchronous gameplay across themed environments with collaborative tasks, impostor mechanics, and voting.
 
 **Current Status**: ✅ **Web version fully playable!** Teams integration coming soon.
 
 ## Features
 
 - **Asynchronous Gameplay**: Play across hours or weeks with timezone shutdowns
-- **Multiple Environments**: Office, Spaceship, Pirate Ship, Deserted Island
+- **Multiple Environments**: Spaceship, Pirate Ship, Deserted Island
 - **Team Modes**: Double-agent mechanics with crew vs. impostor loyalty
 - **Slot-Based Tasks**: Collaborative riddles, trivia, puzzles, and documentation
 - **Adaptive Cards**: Button-based interactions in Teams
