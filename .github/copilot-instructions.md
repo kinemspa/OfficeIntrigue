@@ -35,4 +35,4 @@ Office Intrigue is an asynchronous, text-based multiplayer social deduction game
 - **Azure Cosmos DB**: For persistent state.
 
 ## Documentation
-- See `docs/GAMEPLAY_ENHANCEMENTS.md` for the latest design on Random Events, Progression, and Theming.
+- See `docs/GAME_DESIGN.md` for the comprehensive game design, including Random Events, Progression, and Theming.
