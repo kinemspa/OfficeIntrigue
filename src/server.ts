@@ -26,7 +26,7 @@ app.use(cookieParser());
 // Session configuration
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'office-intrigue-secret-change-me',
+    secret: process.env.SESSION_SECRET || 'hidden-agenda-secret-change-me',
     resave: false,
     saveUninitialized: false,
     cookie: {

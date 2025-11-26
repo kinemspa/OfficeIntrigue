@@ -2,7 +2,7 @@
 
 ## Overview
 
-Office Intrigue exposes both Bot Framework activities and REST API endpoints.
+Hidden Agenda exposes both Bot Framework activities and REST API endpoints.
 
 ## Bot Framework Endpoint
 

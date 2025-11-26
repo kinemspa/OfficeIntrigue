@@ -2,7 +2,7 @@
 
 ## Overview
 
-Office Intrigue is a cloud-native, multi-tenant Microsoft Teams bot application built on Node.js and the Bot Framework SDK. This document describes the system architecture, runtime components, and data flow.
+Hidden Agenda is a cloud-native, multi-tenant Microsoft Teams bot application built on Node.js and the Bot Framework SDK. This document describes the system architecture, runtime components, and data flow.
 
 ## Technology Stack
 
