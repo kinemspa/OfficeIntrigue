@@ -2,17 +2,18 @@
 
 ## Overview
 
-**Intrigue Engine** (working title) is an asynchronous, text-based multiplayer social deduction game. This document serves as the comprehensive guide to the game's mechanics, technical design, and player experience.
+**Hidden Agenda** is an asynchronous, text-based multiplayer social deduction game. This document serves as the comprehensive guide to the game's mechanics, technical design, and player experience.
 
 ## 1. Core Gameplay Loop
 
-The game revolves around two opposing teams: **The Crew** (Survival) and **The Impostors** (Sabotage).
+The game revolves around two **Rival Factions** competing for dominance, with **Double Agents** (Moles) hidden within each team.
 
-### 1.1 The Hook: "Survival & Sabotage"
-The core tension is **Cooperation vs. Betrayal**.
-- **Crew Goal**: Keep the environment stable by completing tasks to fill the "Integrity Meter".
-- **Impostor Goal**: Destabilize the environment or eliminate the crew without being caught.
-- **Engagement**: Asynchronous play allows suspicion to build over hours or days. You might log in to find the "Life Support Failed" or that your "Navigation Data" was corrupted.
+### 1.1 The Hook: "Rival Factions & Double Agents"
+The core tension is **External Competition vs. Internal Betrayal**.
+- **Scenario**: Two visible teams (e.g., "Red Fleet" vs "Blue Fleet") are racing to complete their objective.
+- **The Twist**: Each team has 1 or more "Moles" who are secretly loyal to the *opposing* team.
+- **Mole Goal**: Sabotage their *current* team's progress so the *other* team wins.
+- **Loyalist Goal**: Identify and eliminate the Moles in their own ranks while racing to beat the rival team.
 
 ### 1.2 Win Conditions
 
@@ -20,111 +21,125 @@ The game ends immediately when one of the following conditions is met:
 
 | Condition | Winner | Description |
 | :--- | :--- | :--- |
-| **System Stabilized** | Crew | Integrity Meter reaches **100%**. |
-| **Clean House** | Crew | All Impostors are eliminated (voted out). |
-| **Critical Failure** | Impostor | Integrity Meter reaches **0%**. |
-| **Mutiny Success** | Impostor | Impostors outnumber or equal the Crew. |
+| **Mission Accomplished** | Faction A | Faction A's Progress Meter reaches **100%**. |
+| **Enemy Collapse** | Faction A | Faction B's Progress Meter reaches **0%** (due to sabotage). |
+| **Mole Victory** | Moles | If a specific "Mole Objective" is met (e.g., both teams fail). |
 
 ---
 
-## 2. Thematic Immersion System
+## 2. Detailed Mechanics
 
-The game engine dynamically re-skins the entire interface based on the selected environment. This is not just a text swap; it changes the emotional context of the gameplay.
+### 2.1 Team Structure
+- **Visible Team**: The team you appear to be on (e.g., "Red Team"). You share a chat channel and task list with them.
+- **Hidden Loyalty**: Your true allegiance.
+    - **Loyalist**: Wants their Visible Team to win.
+    - **Mole**: Wants their Visible Team to lose (helping the rival team).
 
-### 2.1 Terminology Map
-When a client loads, it fetches the `TerminologyMap` for the active game to render the UI.
+### 2.2 Task System
+- **Progress Tasks**: Adding to the team's meter (e.g., "Calibrate Shields").
+- **Sabotage**: Moles can "fail" tasks intentionally or trigger negative events.
+- **Counter-Espionage**: Tasks that reveal information about other players (e.g., "Audit Logs" reveals if a player did a task correctly).
 
-| Concept | Spaceship (Default) | Pirate Ship | Deserted Island |
+### 2.3 Voting & Elimination
+- **Internal Tribunal**: Teams vote to "Brig" or "Eject" their own members.
+- **Consequence**: Ejected players are removed from the team channel and can no longer perform tasks.
+- **Risk**: Ejecting a Loyalist slows down the team (fewer hands on deck). Ejecting a Mole stops the sabotage.
+
+---
+
+## 3. Bot Operations & Technical Flow
+
+### 3.1 Bot Architecture
+The game is driven by a Microsoft Teams Bot (or Web Socket server for web) that acts as the Game Master.
+
+**State Management**:
+- The Bot maintains the "Truth" (who is a Mole, what the real scores are).
+- It filters information based on the user's role.
+
+### 3.2 Chat Rooms & Channels
+The game relies on a specific channel topology to manage information flow.
+
+| Channel Type | Visibility | Purpose |
+| :--- | :--- | :--- |
+| **Global News** | Public (All) | Announcements, Game Start/End, Public Events. |
+| **Faction A Channel** | Team A Only | Strategy, Task Coordination. Moles in Team A *can* see this. |
+| **Faction B Channel** | Team B Only | Strategy, Task Coordination. Moles in Team B *can* see this. |
+| **Handler Channel** | Moles Only | (Optional) A secure line for Moles to coordinate with their true masters? |
+| **Direct Message (DM)** | Private (Bot <-> User) | Role assignment, private alerts ("You have been sabotaged!"), Voting UI. |
+
+### 3.3 Message Flow (Adaptive Cards)
+
+1.  **Game Start**:
+    - Bot sends a **DM** to every player: "You are on **Red Team**. Your Loyalty is **[REDACTED]**."
+    - Bot creates/unlocks the **Faction Channels**.
+
+2.  **Turn / Tick**:
+    - Bot posts a **Status Card** in Faction Channels: "Progress: 45%. Alert: Shield Generator Malfunction."
+    - Players click buttons on the card ("Repair", "Investigate").
+
+3.  **Sabotage**:
+    - A Mole clicks "Sabotage" on a task in their DM.
+    - Bot updates the Faction Channel: "Task Failed! Progress -5%." (Does not reveal who did it).
+
+4.  **Voting**:
+    - Player clicks "Call Vote" in DM.
+    - Bot posts a **Vote Card** in the Faction Channel.
+    - Votes are cast anonymously via DM to the Bot.
+    - Bot announces result in Faction Channel.
+
+---
+
+## 4. Thematic Immersion System
+
+The game engine dynamically re-skins the entire interface based on the selected environment.
+
+### 4.1 Terminology Map
+
+| Concept | Spaceship (Default) | Pirate Ship | Cold War |
 | :--- | :--- | :--- | :--- |
-| **Integrity** | Hull Integrity | Ship Morale | Camp Hope |
-| **Crew** | Crewmates | Sailors | Survivors |
-| **Impostor** | Alien Parasite | Mutineer | Traitor |
-| **Task** | Repair | Duty | Forage |
-| **Vote** | Eject | Walk the Plank | Banish |
-| **Eliminated** | KIA | Keelhauled | Lost |
-
-### 2.2 Player Perspectives
-
-#### The "Spaceship" Player (The Engineer)
-> "I just logged in to check the **Hull Integrity**. It's down to 45% because someone keeps sabotaging the **Shield Generator**. I suspect 'Unit 734' is actually an **Alien Parasite**. I'm going to **Vote to Eject** them before we all get **KIA**."
-
-#### The "Pirate" Player (The Swabbie)
-> "The **Ship Morale** is sinking fast! The **Main Sail** keeps getting unfurled. I think 'One-Eyed Jack' is a **Mutineer**. If we don't **Make him Walk the Plank** soon, the Captain will have us all **Keelhauled**."
+| **Faction A** | Starfleet | Royal Navy | CIA |
+| **Faction B** | Klingons | Pirates | KGB |
+| **Mole** | Changeling | Mutineer | Double Agent |
+| **Progress** | Warp Drive Charge | Treasure Map | Intel Decrypted |
+| **Vote** | Court Martial | Maroon | Burn Notice |
 
 ---
 
-## 3. Mechanics & Systems
+## 5. Technical Architecture
 
-### 3.1 Random Events System
-Random events break the monotony of task completion and force players to react to global crises.
+### 5.1 Data Models
 
-**Technical Design**:
-- **Scheduler**: A "Tick-based" scheduler runs every minute.
-- **Trigger**: Rolls a die against the environment's event table.
-
-**Example Scenarios**:
-- **"Solar Flare" (Spaceship)**: 20% of "Completed" tasks revert to "In Progress".
-- **"Becalmed" (Pirate)**: Locks all tasks and forces players into a 60-second voting window.
-- **"Storm Surge" (Island)**: Hides the Integrity Meter for 5 minutes.
-
-### 3.2 Progression & XP
-A persistent layer that rewards loyalty and skill, regardless of the specific game outcome.
-
-**XP Formula**: `Level = floor(sqrt(XP / 100))`
-
-**XP Sources**:
-- **Play**: +50 XP
-- **Win**: +100 XP
-- **Task Completed**: +10 XP
-- **Correct Vote**: +25 XP
-
-**The Rank Ladder (Spaceship Theme)**:
-1.  **Cadet** (Level 1)
-2.  **Ensign** (Level 5)
-3.  **Lieutenant** (Level 10)
-4.  **Commander** (Level 20)
-5.  **Captain** (Level 35)
-6.  **Admiral** (Level 50)
-
----
-
-## 4. Technical Architecture
-
-### 4.1 Data Models
-
-**Terminology Map Schema**:
+**Player Schema**:
 ```typescript
-interface TerminologyMap {
-  integrity: string;
-  crew: string;
-  impostor: string;
-  task: string;
-  vote: string;
-  dead: string;
+interface Player {
+  id: string;
+  visibleTeam: 'A' | 'B';
+  loyalty: 'A' | 'B'; // If visible != loyalty, they are a Mole
+  isAlive: boolean;
+  stats: UserStats;
 }
 ```
 
-**User Profile Schema**:
+**Game State Schema**:
 ```typescript
-interface UserProfile {
-  userId: string;
-  xp: number;
-  level: number;
-  title: string;
-  gamesPlayed: number;
-  gamesWon: number;
+interface GameState {
+  teams: {
+    A: { score: number; members: string[] };
+    B: { score: number; members: string[] };
+  };
+  status: 'active' | 'ended';
+  turn: number;
 }
 ```
 
-### 4.2 Strategy Patterns
-- **WinConditionEvaluator**: Iterates through a list of active conditions to determine game state.
-- **EventScheduler**: Manages probability and execution of random events.
+### 5.2 Strategy Patterns
+- **WinConditionEvaluator**: Checks `TeamA.score >= 100` or `TeamB.score >= 100`.
+- **EventScheduler**: Triggers random events that might affect one or both teams.
 
 ---
 
-## 5. Migration Plan
+## 6. Migration Plan
 
-1.  **Update Types**: Add `TerminologyMap` and `UserProfile` interfaces to `src/models/types.ts`.
-2.  **Update Configs**: Refactor all JSON environment files to include the `terminology` map.
-3.  **Backend Logic**: Implement `EventScheduler` and `WinConditionEvaluator` in `GameEngine.ts`.
-4.  **Frontend Refactor**: Update `game.js` to fetch and use dynamic labels instead of hardcoded strings.
+1.  **Update Types**: Refactor `Player` and `GameState` to support Factions.
+2.  **Bot Logic**: Implement the "Split Channel" logic (sending different messages to different groups).
+3.  **Frontend**: Update the UI to show "My Team" vs "Enemy Team" progress.
