@@ -1,10 +1,10 @@
 # Office Intrigue
 
-An asynchronous, text-based multiplayer social deduction game for Microsoft Teams, inspired by Among Us.
+An asynchronous, text-based multiplayer social deduction game for Microsoft Teams.
 
 ## Overview
 
-Office Intrigue is a social deduction game inspired by Among Us, built for Microsoft Teams and playable as a standalone web app. Support 4-100 players in asynchronous gameplay across themed environments with collaborative tasks, impostor mechanics, and voting.
+Office Intrigue is a social deduction game built for Microsoft Teams and playable as a standalone web app. Support 4-100 players in asynchronous gameplay across themed environments with collaborative tasks, impostor mechanics, and voting.
 
 **Current Status**: ✅ **Web version fully playable!** Teams integration coming soon.
 
