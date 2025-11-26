@@ -18,6 +18,7 @@ Office Intrigue is a cloud-native, multi-tenant Microsoft Teams bot application 
 ### 1. Bot Framework Pipeline
 
 **Entry Point**: `/api/messages`
+
 - CloudAdapter handles Bot Framework protocol
 - TeamsActivityHandler processes messages and card submissions
 - Captures user context (AAD Object ID) for authentication
@@ -25,6 +26,7 @@ Office Intrigue is a cloud-native, multi-tenant Microsoft Teams bot application 
 ### 2. REST API Endpoints
 
 Complement bot interactions with programmatic access:
+
 - `/api/game/*` - Game lifecycle management
 - `/api/task/*` - Task operations
 - `/api/vote/*` - Voting mechanics
@@ -33,6 +35,7 @@ Complement bot interactions with programmatic access:
 ### 3. Game Engine
 
 Core business logic for game state management:
+
 - `startGame()` - Initialize new game instance
 - `joinTask()` - Player joins slot-based task
 - `completeTask()` - Validate and process task completion
@@ -41,6 +44,7 @@ Core business logic for game state management:
 ### 4. Quiet Hours Scheduler
 
 Timezone-aware async gameplay management:
+
 - Runs every 15 minutes (node-cron)
 - Pauses games outside tenant-specific active hours
 - Resumes games when business hours begin
@@ -50,11 +54,13 @@ Timezone-aware async gameplay management:
 ### Tenant Isolation
 
 **Cosmos DB Partitioning**:
+
 - Partition Key: `{tenantId}#{gameId}` for game-scoped documents
 - Partition Key: `{tenantId}` for leaderboard aggregates
 - Each tenant's data is physically isolated
 
 **Authentication**:
+
 - Microsoft Entra ID validates user identity
 - Bot Framework handles tenant context automatically
 

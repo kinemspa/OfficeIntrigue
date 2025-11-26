@@ -28,13 +28,13 @@ router.post('/join', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'gameId and playerName required' });
     }
     const player = await gameEngine.joinGame({ gameId, playerName });
-    
+
     // Store player ID in session
     if (req.session) {
       req.session.playerId = player.id;
       req.session.gameId = gameId;
     }
-    
+
     res.json(player);
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
@@ -58,13 +58,13 @@ router.get('/state/:gameId', async (req: Request, res: Response) => {
     if (!game) {
       return res.status(404).json({ error: 'Game not found' });
     }
-    
+
     // Hide impostor roles if game is active (only show to impostor players)
     const playerId = req.session?.playerId;
     if (game.status === 'active' && playerId) {
       const currentPlayer = game.players.find((p) => p.id === playerId);
       const isImpostor = currentPlayer?.role.loyalty === 'impostor';
-      
+
       if (!isImpostor) {
         // Hide other players' roles
         game.players = game.players.map((p) => ({
@@ -73,7 +73,7 @@ router.get('/state/:gameId', async (req: Request, res: Response) => {
         }));
       }
     }
-    
+
     res.json(game);
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });

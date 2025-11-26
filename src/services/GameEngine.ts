@@ -9,14 +9,14 @@ export class GameEngine {
     try {
       const envPath = path.join(process.cwd(), 'config', 'environments', `${theme}.json`);
       const data = JSON.parse(fs.readFileSync(envPath, 'utf-8'));
-      
+
       // Transform tasks to include runtime properties
       const tasks: Task[] = data.tasks.map((t: Partial<Task>) => ({
         ...t,
         participants: [],
         completed: false,
       }));
-      
+
       return {
         tasks,
         eliminationFlavors: data.eliminationFlavors,
@@ -108,11 +108,12 @@ export class GameEngine {
     // Assign roles (simple: 1 impostor for every 5 players)
     const impostorCount = Math.max(1, Math.floor(game.players.length / 5));
     const shuffled = [...game.players].sort(() => Math.random() - 0.5);
-    
+
     shuffled.forEach((player, idx) => {
-      player.role = idx < impostorCount
-        ? { name: 'impostor', loyalty: 'impostor' }
-        : { name: 'crew', loyalty: 'crew' };
+      player.role =
+        idx < impostorCount
+          ? { name: 'impostor', loyalty: 'impostor' }
+          : { name: 'crew', loyalty: 'crew' };
     });
 
     game.status = 'active';
@@ -153,7 +154,11 @@ export class GameEngine {
     await memoryStorage.update('games', game);
   }
 
-  async completeTask(gameId: string, playerId: string, taskId: string): Promise<{ success: boolean }> {
+  async completeTask(
+    gameId: string,
+    playerId: string,
+    taskId: string
+  ): Promise<{ success: boolean }> {
     const game = await memoryStorage.read('games', gameId, 'default-tenant');
     if (!game) throw new Error('Game not found');
 
